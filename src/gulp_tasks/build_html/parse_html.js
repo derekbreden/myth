@@ -1,4 +1,4 @@
-import htmlparser from 'htmlparser2'
+import htmlparser from 'htmlparser2-myth'
 import gutil from 'gulp-util'
 import parse_node from './parse_node'
 import parse_css from './parse_css'

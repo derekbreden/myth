@@ -1,6 +1,6 @@
 {
   "name": "myth",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "scripts": {
     "start": "gulp"
   },
@@ -21,7 +21,7 @@
     "gulp-concat-css": "2.2.0",
     "gulp-develop-server": "0.4.3",
     "gulp-util": "3.0.6",
-    "htmlparser2": "3.8.3",
+    "htmlparser2-myth": "derekbreden/htmlparser2-myth",
     "mithril": "0.2.0",
     "run-sequence": "1.1.2",
     "through2": "2.0.0",
