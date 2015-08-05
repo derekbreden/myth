@@ -6,9 +6,9 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _htmlparser2 = require('htmlparser2');
+var _htmlparser2Myth = require('htmlparser2-myth');
 
-var _htmlparser22 = _interopRequireDefault(_htmlparser2);
+var _htmlparser2Myth2 = _interopRequireDefault(_htmlparser2Myth);
 
 var _gulpUtil = require('gulp-util');
 
@@ -26,7 +26,7 @@ exports['default'] = function (file, callback, class_iterator) {
   var _this = this;
 
   var final_css = '';
-  var handler = new _htmlparser22['default'].DomHandler(function (error, dom) {
+  var handler = new _htmlparser2Myth2['default'].DomHandler(function (error, dom) {
     var top_level_class = 'ms-' + class_iterator;
     var built = {
       html_css: '',
@@ -51,7 +51,7 @@ exports['default'] = function (file, callback, class_iterator) {
       contents: new Buffer('\n  ' + built.window_js + '\n  module.exports["' + file.relative.replace(/\..*$/, '') + '"] = {\n  is_body(){\n  return ' + !!built.views[0].match(/^m\('body'/) + '\n  },\n  controller(args){\n  ' + built.ctrl_js + '\n  },\n  view(ctrl, args){\n  return ' + built_views + '\n  }\n  }\n  ') }));
     callback();
   });
-  var parser = new _htmlparser22['default'].Parser(handler);
+  var parser = new _htmlparser2Myth2['default'].Parser(handler);
   parser.write(file.contents);
   parser.done();
   return final_css;
