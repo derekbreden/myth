@@ -22,7 +22,7 @@ gulp.task("build", ["clean"], function(){
 
 gulp.task("watch", function(){
   return gulp.watch([
-    './src/gulp_tasks/**/*.js'
+    './src/gulpfile/**/*.js'
   ], ["build"])
 })
 
