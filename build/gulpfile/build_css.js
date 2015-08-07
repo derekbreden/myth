@@ -17,9 +17,9 @@ var _del = require('del');
 var _del2 = _interopRequireDefault(_del);
 
 _gulp2['default'].task("build_css", function () {
-  return _gulp2['default'].src("./node_modules/myth/src/entry/client.css").pipe((0, _gulpConcatCss2['default'])("entry/client.css")).pipe(_gulp2['default'].dest("./build")).on('error', function () {
+  return _gulp2['default'].src("./node_modules/myth/src/entry/client.css").pipe((0, _gulpConcatCss2['default'])("entry/client.css")).on('error', function () {
     console.error(_arguments);
-  }).on('end', function () {
+  }).pipe(_gulp2['default'].dest("./build")).on('end', function () {
     (0, _del2['default'])(['./build/tmp_modules.css'], function () {});
   });
 });

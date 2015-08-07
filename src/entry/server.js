@@ -1,4 +1,4 @@
-import engine from '../../node_modules/myth/node_modules/engine.io'
+import engine from 'myth/node_modules/engine.io'
 import http_server from '../router/server'
 
 let server = engine.attach(http_server)

@@ -1,4 +1,4 @@
-import eio from 'engine.io-client'
+import eio from 'myth/node_modules/engine.io-client'
 let socket = new eio.Socket('ws://'+window.location.hostname+':'+window.location.port+'/')
 socket.on('open', () => {
   if(!socket.opened){

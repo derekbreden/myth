@@ -23,14 +23,20 @@ var _vinylSourceStream = require('vinyl-source-stream');
 var _vinylSourceStream2 = _interopRequireDefault(_vinylSourceStream);
 
 _gulp2['default'].task("build_js", function (cb) {
-  (0, _browserify2['default'])({
-    entries: ['./node_modules/myth/src/entry/client.js']
-  }).transform(_babelify2['default']).bundle().on('error', function (err) {
-    console.error(err.filename);
-    console.error(err.loc);
-    console.error(err.codeFrame);
-  }).pipe((0, _vinylSourceStream2['default'])('entry/client.js')).pipe(_gulp2['default'].dest("./build")).on('end', function () {
-    (0, _del2['default'])(['./build/tmp_modules.js'], function () {});
-    if (cb) cb();
+
+  _gulp2['default'].src(["./node_modules/myth/src/**/*.js", "!./node_modules/myth/src/**/server.js", "!./node_modules/myth/src/gulpfile/**/*.js"]).pipe(_gulp2['default'].dest("./build/")).on('end', function () {
+    (0, _browserify2['default'])({
+      entries: ['./build/entry/client.js']
+    }).transform(_babelify2['default']).bundle().on('error', function (err) {
+      console.warn(err.toString());
+      if (err.filename) {
+        console.error(err.filename);
+        console.error(err.loc);
+        console.error(err.codeFrame);
+      }
+    }).pipe((0, _vinylSourceStream2['default'])('entry/client.js')).pipe(_gulp2['default'].dest("./build")).on('end', function () {
+      (0, _del2['default'])(["./build/**/*.js", "!./build/**/server.js", "!./build/entry/client.js", "./build/socket", "./build/m"], function () {});
+      if (cb) cb();
+    });
   });
 });

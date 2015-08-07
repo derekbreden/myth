@@ -1,4 +1,4 @@
-let modules = require('../../../../build/tmp_modules')
+let modules = require('../tmp_modules')
 import m from '../m/m'
 
 export default {
