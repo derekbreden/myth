@@ -6,8 +6,8 @@ http_server.on('request',(req,res) => {
   res.setHeader('Content-type','text/html')
   res.end(`<!doctype html>
     <head>
-      <style>${fs.readFileSync('./build/entry/client.css')}</style>
-      <script>${fs.readFileSync('./build/entry/client.js')}</script>
+      <style>${fs.readFileSync('./build/client/index.css')}</style>
+      <script>${fs.readFileSync('./build/client/index.js')}</script>
     </head>`)
 })
 

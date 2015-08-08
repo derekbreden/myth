@@ -24,9 +24,9 @@ var _vinylSourceStream2 = _interopRequireDefault(_vinylSourceStream);
 
 _gulp2['default'].task("build_js", function (cb) {
 
-  _gulp2['default'].src(["./node_modules/myth/src/**/*.js", "!./node_modules/myth/src/**/server.js", "!./node_modules/myth/src/gulpfile/**/*.js"]).pipe(_gulp2['default'].dest("./build/")).on('end', function () {
+  _gulp2['default'].src(["./node_modules/myth/src/client/**/*.js"]).pipe(_gulp2['default'].dest("./build/client/")).on('end', function () {
     (0, _browserify2['default'])({
-      entries: ['./build/entry/client.js']
+      entries: ['./build/client/index.js']
     }).transform(_babelify2['default']).bundle().on('error', function (err) {
       console.warn(err.toString());
       if (err.filename) {
@@ -34,8 +34,14 @@ _gulp2['default'].task("build_js", function (cb) {
         console.error(err.loc);
         console.error(err.codeFrame);
       }
-    }).pipe((0, _vinylSourceStream2['default'])('entry/client.js')).pipe(_gulp2['default'].dest("./build")).on('end', function () {
-      (0, _del2['default'])(["./build/**/*.js", "!./build/**/server.js", "!./build/entry/client.js", "./build/socket", "./build/m"], function () {});
+    }).pipe((0, _vinylSourceStream2['default'])('client/index.js')).pipe(_gulp2['default'].dest("./build")).on('end', function () {
+      // del([
+      //   "./build/**/*.js",
+      //   "!./build/**/server.js",
+      //   "!./build/entry/client.js",
+      //   "./build/socket",
+      //   "./build/m"
+      // ],()=>{})
       if (cb) cb();
     });
   });

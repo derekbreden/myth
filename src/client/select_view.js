@@ -1,5 +1,5 @@
 let modules = require('../tmp_modules')
-import m from '../m/m'
+import m from './m'
 
 export default {
   controller(){

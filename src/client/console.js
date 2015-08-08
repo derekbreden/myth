@@ -1,5 +1,5 @@
 let types = ['error','log','info','warn']
-import m from '../m/m'
+import m from './m'
   
 export default function(socket){
 

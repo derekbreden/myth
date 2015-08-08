@@ -1,7 +1,7 @@
-import socket from '../socket/client'
+import socket from './socket'
 import select_view from './select_view'
-import console_client from '../console/client'
-import m from '../m/m'
+import console_client from './console'
+import m from './m'
 
 let console_view = console_client(socket)
 

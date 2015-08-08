@@ -1,13 +1,14 @@
-import Convert from '../../node_modules/myth/node_modules/ansi-to-html'
+import Convert from 'myth/node_modules/ansi-to-html'
+
 let convert = new Convert()
 let types = ['error','log','info','warn']
 let last_10_console = []
 
-export default function(server){
+export default function(socket_server){
 
   // Capture sockets from server
   let sockets = {}
-  server.on('connection', (socket) => {
+  socket_server.on('connection', (socket) => {
     for(let i in last_10_console)
       socket.send(last_10_console[i])
     sockets[socket.id] = socket

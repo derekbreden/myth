@@ -7,14 +7,12 @@ import source from 'vinyl-source-stream'
 gulp.task("build_js",(cb)=>{
 
   gulp.src([
-    "./node_modules/myth/src/**/*.js",
-    "!./node_modules/myth/src/**/server.js",
-    "!./node_modules/myth/src/gulpfile/**/*.js"
+    "./node_modules/myth/src/client/**/*.js"
   ])
-    .pipe(gulp.dest("./build/"))
+    .pipe(gulp.dest("./build/client/"))
     .on('end',()=>{
       browserify({
-        entries: ['./build/entry/client.js']
+        entries: ['./build/client/index.js']
       })
       .transform(babelify)
       .bundle()
@@ -26,16 +24,16 @@ gulp.task("build_js",(cb)=>{
           console.error(err.codeFrame)
         }
       })
-      .pipe(source('entry/client.js'))
+      .pipe(source('client/index.js'))
       .pipe(gulp.dest("./build"))
       .on('end', () => {
-        del([
-          "./build/**/*.js",
-          "!./build/**/server.js",
-          "!./build/entry/client.js",
-          "./build/socket",
-          "./build/m"
-        ],()=>{})
+        // del([
+        //   "./build/**/*.js",
+        //   "!./build/**/server.js",
+        //   "!./build/entry/client.js",
+        //   "./build/socket",
+        //   "./build/m"
+        // ],()=>{})
         if(cb)cb()
       })
     })
