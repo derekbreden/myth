@@ -8,6 +8,7 @@ export default function(socket){
   let console_view = m.component({
     controller(){
       this.tab = m.prop('Console')
+      this.logs = logs
     },
     view(ctrl){
       return m('console',

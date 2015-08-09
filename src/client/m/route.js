@@ -1,7 +1,6 @@
 export default function(m){
   window.onpopstate = function(){
-    m.startComputation()
-    m.endComputation()
+    m.redraw()
   }
   return (e) => {
     e.preventDefault()

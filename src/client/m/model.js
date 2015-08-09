@@ -28,15 +28,15 @@ export default function(m){
     // Main function for getting and setting
     let get_set = (new_s) => {
       if (new_s !== undefined){
-        m.startComputation()
         if(
-          typeof new_s === "object"
+          !Array.isArray(s)
+          && typeof new_s === "object"
           && typeof s === "object"
         )
           s = just_set_or_modelize_a_few(s,new_s)
         else
           s = set_or_modelize(s,new_s)
-        m.endComputation()
+        m.redraw()
         get_set.emit('change')
       }
       return s
@@ -50,9 +50,8 @@ export default function(m){
     let ks = ['push','unshift']
     for(let i in ks)
       get_set[ks[i]] = (new_s) => {
-        m.startComputation()
         s[ks[i]](model(new_s))
-        m.endComputation()
+        m.redraw()
         get_set.emit('change')
       }
     //

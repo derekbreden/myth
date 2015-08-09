@@ -22,7 +22,7 @@
     "gulp-develop-server": "0.4.3",
     "gulp-util": "3.0.6",
     "htmlparser2-myth": "derekbreden/htmlparser2-myth",
-    "mithril": "0.2.0",
+    "mithril-myth": "derekbreden/mithril-myth",
     "run-sequence": "1.1.2",
     "through2": "2.0.0",
     "vinyl-source-stream": "1.1.0"
