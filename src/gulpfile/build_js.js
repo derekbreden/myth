@@ -27,13 +27,10 @@ gulp.task("build_js",(cb)=>{
       .pipe(source('client/index.js'))
       .pipe(gulp.dest("./build"))
       .on('end', () => {
-        // del([
-        //   "./build/**/*.js",
-        //   "!./build/**/server.js",
-        //   "!./build/entry/client.js",
-        //   "./build/socket",
-        //   "./build/m"
-        // ],()=>{})
+        del([
+          "./build/client/**/*.js",
+          "!./build/client/index.js"
+        ],()=>{})
         if(cb)cb()
       })
     })

@@ -35,13 +35,7 @@ _gulp2['default'].task("build_js", function (cb) {
         console.error(err.codeFrame);
       }
     }).pipe((0, _vinylSourceStream2['default'])('client/index.js')).pipe(_gulp2['default'].dest("./build")).on('end', function () {
-      // del([
-      //   "./build/**/*.js",
-      //   "!./build/**/server.js",
-      //   "!./build/entry/client.js",
-      //   "./build/socket",
-      //   "./build/m"
-      // ],()=>{})
+      (0, _del2['default'])(["./build/client/**/*.js", "!./build/client/index.js"], function () {});
       if (cb) cb();
     });
   });

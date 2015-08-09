@@ -28,7 +28,7 @@ _gulp2['default'].task("build_html", function () {
   var built_css = '';
   return _gulp2['default'].src("./src/**/*.html").pipe(_through22['default'].obj(function (file, enc, callback) {
     built_css += _parse_html2['default'].bind(this)(file, callback, class_iterator++);
-  })).pipe((0, _gulpConcat2['default'])('tmp_modules.js')).pipe(_through22['default'].obj(function (file, enc, callback) {
+  })).pipe((0, _gulpConcat2['default'])('client/tmp_modules.js')).pipe(_through22['default'].obj(function (file, enc, callback) {
     this.push(new _gulpUtil2['default'].File({
       path: 'tmp_modules.css',
       contents: new Buffer(built_css)
