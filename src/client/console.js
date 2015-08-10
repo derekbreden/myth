@@ -1,5 +1,5 @@
 let types = ['error','log','info','warn']
-import m from './m'
+import m from 'myth/node_modules/mithril-myth'
   
 export default function(socket){
 

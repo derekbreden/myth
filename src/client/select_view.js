@@ -1,5 +1,5 @@
 let modules = require('./tmp_modules')
-import m from './m'
+import m from 'myth/node_modules/mithril-myth'
 
 export default {
   controller(){

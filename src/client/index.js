@@ -1,2 +1,2 @@
 import './dom'
-window.m = require('./m')
+window.m = require('myth/node_modules/mithril-myth')

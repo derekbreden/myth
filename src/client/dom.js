@@ -1,7 +1,7 @@
 import socket from './socket'
 import select_view from './select_view'
 import console_client from './console'
-import m from './m'
+import m from 'myth/node_modules/mithril-myth'
 
 let console_view = console_client(socket)
 
