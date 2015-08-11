@@ -36,7 +36,7 @@ let parse_node = (node, built, top_level_class) => {
   }else if(node.type === 'text'){
     let d = node.data
     if(!d.replace(/(\n|\t)/g,' ').match(/^ *$/)){
-      let js = d.replace(/this\./g,'ctrl.')
+      let js = d.replace(/this\./g,'ctrl.').replace(/^[\n ]*/,'')
       if(built.needs_closing){
         built.needs_closing = false
         js=" ] "+js

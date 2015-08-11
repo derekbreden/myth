@@ -1,9 +1,4 @@
-import m from 'myth/node_modules/mithril-myth'
-
-window.socket = require('./socket') // import syntax hoists erg ...
-let modules = require('./tmp_modules')
-let select_view = require('./select_view')
-
+<script window>
 document.addEventListener( "DOMContentLoaded", () => {
 
   // Preserve style
@@ -29,12 +24,13 @@ document.addEventListener( "DOMContentLoaded", () => {
         m('head',m('style',s)),
 
         // User controlled view
-        select_view,
+        m.nest('select_view'),
 
         // The console
-        m.component(modules.console)
+        m.nest('console')
 
       ])
     }
   })
 })
+</script>

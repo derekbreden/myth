@@ -48,7 +48,7 @@ exports['default'] = function (file, callback, class_iterator) {
 
     _this.push(new _gulpUtil2['default'].File({
       path: file.relative,
-      contents: new Buffer('\n  ' + built.window_js + '\n  module.exports["' + file.relative.replace(/\..*$/, '') + '"] = {\n  is_body(){\n  return ' + !!built.views[0].match(/^m\('body'/) + '\n  },\n  controller(args){\n  ' + built.ctrl_js + '\n  },\n  view(ctrl, args){\n  return ' + built_views + '\n  }\n  }\n  ') }));
+      contents: new Buffer('\n  ' + built.window_js + '\n  module.exports["' + file.relative.replace(/\..*$/, '') + '"] = {\n  is_body(){\n  return ' + !!(built.views[0] && built.views[0].match(/^m\('body'/)) + '\n  },\n  controller(args){\n  ' + built.ctrl_js + '\n  },\n  view(ctrl, args){\n  return ' + built_views + '\n  }\n  }\n  ') }));
     callback();
   });
   var parser = new _htmlparser2Myth2['default'].Parser(handler);

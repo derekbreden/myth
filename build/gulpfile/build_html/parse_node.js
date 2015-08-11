@@ -35,7 +35,7 @@ var parse_node = function parse_node(node, built, top_level_class) {
   } else if (node.type === 'text') {
     var d = node.data;
     if (!d.replace(/(\n|\t)/g, ' ').match(/^ *$/)) {
-      var js = d.replace(/this\./g, 'ctrl.');
+      var js = d.replace(/this\./g, 'ctrl.').replace(/^[\n ]*/, '');
       if (built.needs_closing) {
         built.needs_closing = false;
         js = " ] " + js;

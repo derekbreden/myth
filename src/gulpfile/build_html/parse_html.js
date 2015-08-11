@@ -32,7 +32,7 @@ export default function(file, callback, class_iterator){
   ${built.window_js}
   module.exports["${file.relative.replace(/\..*$/,'')}"] = {
   is_body(){
-  return ${!!(built.views[0].match(/^m\('body'/))}
+  return ${!!(built.views[0] && built.views[0].match(/^m\('body'/))}
   },
   controller(args){
   ${built.ctrl_js}

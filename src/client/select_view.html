@@ -1,0 +1,17 @@
+<script>
+  this.select_view = ()=>{
+    let which = 'index'
+    let path = window.location.pathname
+    path = path.substr(1,path.length)
+
+    // This will get fancier
+    if(m.nest.data[path])
+      which = path
+    // module should also be able to specify more routes than its filename somehow
+
+    return m.nest.data[which].is_body()
+      ?m.nest(which)
+      :m('body',m.nest(which))
+  }
+</script>
+this.select_view()
