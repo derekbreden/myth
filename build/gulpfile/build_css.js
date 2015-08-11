@@ -1,7 +1,5 @@
 'use strict';
 
-var _arguments = arguments;
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _gulp = require('gulp');
@@ -17,9 +15,7 @@ var _del = require('del');
 var _del2 = _interopRequireDefault(_del);
 
 _gulp2['default'].task("build_css", function () {
-  return _gulp2['default'].src("./node_modules/myth/src/client/index.css").pipe((0, _gulpConcatCss2['default'])("client/index.css")).on('error', function () {
-    console.error(_arguments);
-  }).pipe(_gulp2['default'].dest("./build")).on('end', function () {
+  return _gulp2['default'].src("./build/client.css").pipe(_gulp2['default'].dest("./build")).on('end', function () {
     (0, _del2['default'])(['./build/tmp_modules.css'], function () {});
   });
 });

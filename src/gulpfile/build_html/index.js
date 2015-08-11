@@ -9,14 +9,17 @@ gulp.task("build_html", ()=>{
   let class_iterator = 0
   let built_css = ''
   return gulp
-    .src("./src/**/*.html")
+    .src([
+      "./src/**/*.html",
+      "./node_modules/myth/src/client/*.html"
+    ])
     .pipe(through2.obj(function(file, enc, callback){
       built_css += parse_html.bind(this)(file, callback, class_iterator++)
     }))
     .pipe(concat('client/tmp_modules.js'))
     .pipe(through2.obj(function(file, enc, callback){
       this.push(new gutil.File({
-        path: 'tmp_modules.css',
+        path: 'client/index.css',
         contents: new Buffer(built_css)
       }))
       this.push(file)

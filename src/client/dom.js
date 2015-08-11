@@ -1,9 +1,8 @@
-import socket from './socket'
-import select_view from './select_view'
-import console_client from './console'
 import m from 'myth/node_modules/mithril-myth'
 
-let console_view = console_client(socket)
+window.socket = require('./socket') // import syntax hoists erg ...
+let modules = require('./tmp_modules')
+let select_view = require('./select_view')
 
 document.addEventListener( "DOMContentLoaded", () => {
 
@@ -33,7 +32,7 @@ document.addEventListener( "DOMContentLoaded", () => {
         select_view,
 
         // The console
-        console_view
+        m.component(modules.console)
 
       ])
     }

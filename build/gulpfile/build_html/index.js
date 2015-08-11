@@ -26,11 +26,11 @@ _gulp2['default'].task("build_html", function () {
 
   var class_iterator = 0;
   var built_css = '';
-  return _gulp2['default'].src("./src/**/*.html").pipe(_through22['default'].obj(function (file, enc, callback) {
+  return _gulp2['default'].src(["./src/**/*.html", "./node_modules/myth/src/client/*.html"]).pipe(_through22['default'].obj(function (file, enc, callback) {
     built_css += _parse_html2['default'].bind(this)(file, callback, class_iterator++);
   })).pipe((0, _gulpConcat2['default'])('client/tmp_modules.js')).pipe(_through22['default'].obj(function (file, enc, callback) {
     this.push(new _gulpUtil2['default'].File({
-      path: 'tmp_modules.css',
+      path: 'client/index.css',
       contents: new Buffer(built_css)
     }));
     this.push(file);

@@ -19,6 +19,6 @@ export default {
     }
   },
   view(ctrl){
-    return ctrl.select_view()  
+    return ctrl.select_view()
   }
 }
