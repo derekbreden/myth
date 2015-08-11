@@ -9,35 +9,46 @@ export default function(socket){
     controller(){
       this.tab = m.prop('Console')
       this.logs = logs
+      this.tabItem = (which)=>
+        m('console-header-item',{
+          class:this.tab()===which?'active':'',
+          onclick:()=>{this.tab(which)}
+        },which)
     },
     view(ctrl){
       return m('console',
         m('console-header',[
-          m('console-header-item',{class:ctrl.tab()==='Inspector'?'active':''},'Inspector'),
-          m('console-header-item',{class:ctrl.tab()==='Editor'?'active':''},'Editor'),
-          m('console-header-item',{class:ctrl.tab()==='Console'?'active':''},'Console')
+          ctrl.tabItem('Inspector'),
+          ctrl.tabItem('Editor'),
+          ctrl.tabItem('Console')
         ]),
-        m('console-inner',{
-            config(el,initted){
-              if(!initted){
-                el.scrollTop = el.scrollHeight
-                logs.on('change',()=>{
-                  setTimeout(()=>{
-                    el.scrollTop = el.scrollHeight
-                  },100)
-                })
+        ctrl.tab()==='Console'
+          ?m('console-inner',{
+              config(el,initted){
+                if(!initted){
+                  el.scrollTop = el.scrollHeight
+                  logs.on('change',()=>{
+                    setTimeout(()=>{
+                      el.scrollTop = el.scrollHeight
+                    },100)
+                  })
+                }
               }
-            }
-          },
-          logs().map((log)=>{
-            return m('console-item',m.trust(
-              log()
-              .replace(/#00A/g,'#59F')
-              .replace(/#A00/g,'#F55')
-              .replace(/#A50/g,'#CC0')
-            ))
-          })
-        )
+            },
+            logs().map((log)=>{
+              return m('console-item',m.trust(
+                log()
+                .replace(/#00A/g,'#59F')
+                .replace(/#A00/g,'#F55')
+                .replace(/#A50/g,'#CC0')
+              ))
+            })
+          )
+        :ctrl.tab()==='Inspector'
+          ?m('console-inner','Inspector')
+        :ctrl.tab()==='Editor'
+          ?m('console-inner','Editor')
+          :[]
       )
     }
   })
