@@ -4,27 +4,32 @@
     ctrl.tabItem('Editor'),
     ctrl.tabItem('Console')
   </console-header>
-  ctrl.tab()==='Console'
-    ?<console-inner config=this.consoleConfig>
+  ctrl.tab()==='Console'?
+    <console-inner config=this.consoleConfig>
       logs().map((log)=>
-        <console-item>m.trust(
-          log()
-            .replace(/#00A/g,'#59F')
-            .replace(/#A00/g,'#F55')
-            .replace(/#A50/g,'#CC0')
+        <console-item>
+          m.trust(
+            log()
+              .replace(/#00A/g,'#59F')
+              .replace(/#A00/g,'#F55')
+              .replace(/#A50/g,'#CC0')
           )
         </console-item>
       )
     </console-inner>
-  :ctrl.tab()==='Inspector'
-    ?<console-inner>'Inspector'</console-inner>
-  :ctrl.tab()==='Editor'
-    ?<console-inner>'Editor'</console-inner>
+  :ctrl.tab()==='Inspector'?
+    <console-inner>
+      'Inspector will go here'
+    </console-inner>
+  :ctrl.tab()==='Editor'?
+    <console-inner>
+      'Editor will go here'
+    </console-inner>
   :[]
 </console>
 
 <script>
-  this.tab = m.prop('Console')
+  this.tab = m.prop('Editor')
   this.logs = logs
   this.tabItem = (which)=>
     m('console-header-item',{
@@ -72,7 +77,7 @@ html{
 }
 body{
   position: absolute; margin: 0;
-  bottom: 50%; top: 0; left: 0; right: 0;
+  bottom: 0; top: 0; left: 50%; right: 0;
   overflow: auto; height: auto; width: auto;
 }
 </style>
@@ -89,11 +94,11 @@ console{
   letter-spacing: .5px;
   line-height: 24px;
   position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  width: auto;
-  height: 50%;
+  width: 50%;
+  height: auto;
   transition: height 200ms ease-in;
   -webkit-transition: height 200ms ease-in;
 }
