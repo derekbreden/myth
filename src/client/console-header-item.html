@@ -6,6 +6,6 @@
 </console-header-item>
 
 <script>
-  this.click = () => this.tab(this.label)
-  this.class = () => this.tab()===this.label?'active':''
+  this.click = () => this.parent.tab(this.label)
+  this.class = () => this.parent.tab()===this.label?'active':''
 </script>
