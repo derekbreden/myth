@@ -1,0 +1,17 @@
+<script>
+this.onclick = (e)=>{
+  let $t = e.target
+  for(let i in $t.attributes){
+    if($t.attributes[i].name === 'href'){
+      m.route(e)
+    }
+  }
+}
+</script>
+<html onclick=this.onclick>
+  <head>
+    <style root>this.s</style>
+  </head>
+  m.child('select_view'),
+  m.child('console')
+</html>

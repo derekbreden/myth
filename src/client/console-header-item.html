@@ -1,0 +1,11 @@
+<console-header-item
+  class=this.class()
+  onclick=this.click
+>
+  this.label
+</console-header-item>
+
+<script>
+  this.click = () => this.tab(this.label)
+  this.class = () => this.tab()===this.label?'active':''
+</script>
