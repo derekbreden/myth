@@ -4,43 +4,14 @@
     m.child('console-header-item',{label:'Editor'}),
     m.child('console-header-item',{label:'Console'})
   </console-header>
-  this.tab()==='Console'?
-    <console-inner config=this.consoleConfig>
-      logs().map((log)=>
-        <console-item>
-          m.trust(
-            log()
-              .replace(/#00A/g,'#59F')
-              .replace(/#A00/g,'#F55')
-              .replace(/#A50/g,'#CC0')
-          )
-        </console-item>
-      )
-    </console-inner>
-  :this.tab()==='Inspector'?
-    <console-inner>
-      'Inspector will go here'
-    </console-inner>
-  :this.tab()==='Editor'?
-    <console-inner>
-      'Editor will go here'
-    </console-inner>
+  this.tab()==='Console'?m.child('console-console')
+  :this.tab()==='Inspector'?m.child('console-inspector')
+  :this.tab()==='Editor'?m.child('console-editor')
   :[]
 </console>
 
 <script>
   this.tab = m.prop('Editor')
-  this.logs = logs
-  this.consoleConfig = (el,initted)=>{
-    if(!initted){
-      el.scrollTop = el.scrollHeight
-      logs.on('change',()=>{
-        setTimeout(()=>{
-          el.scrollTop = el.scrollHeight
-        },100)
-      })
-    }
-  }
 </script>
 
 <script window>

@@ -1,0 +1,24 @@
+<console-inner config=this.consoleConfig>
+  logs().map((log)=>
+    <console-item>
+      m.trust(
+        log()
+          .replace(/#00A/g,'#59F')
+          .replace(/#A00/g,'#F55')
+          .replace(/#A50/g,'#CC0')
+      )
+    </console-item>
+  )
+</console-inner>
+<script>
+  this.consoleConfig = (el,initted)=>{
+    if(!initted){
+      el.scrollTop = el.scrollHeight
+      logs.on('change',()=>{
+        setTimeout(()=>{
+          el.scrollTop = el.scrollHeight
+        },100)
+      })
+    }
+  }
+</script>
