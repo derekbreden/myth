@@ -4,7 +4,7 @@
     m.child('console-header-item',{label:'Editor'}),
     m.child('console-header-item',{label:'Console'})
   </console-header>
-  ctrl.tab()==='Console'?
+  this.tab()==='Console'?
     <console-inner config=this.consoleConfig>
       logs().map((log)=>
         <console-item>
@@ -17,11 +17,11 @@
         </console-item>
       )
     </console-inner>
-  :ctrl.tab()==='Inspector'?
+  :this.tab()==='Inspector'?
     <console-inner>
       'Inspector will go here'
     </console-inner>
-  :ctrl.tab()==='Editor'?
+  :this.tab()==='Editor'?
     <console-inner>
       'Editor will go here'
     </console-inner>
