@@ -6,9 +6,9 @@ Object.defineProperty(exports, '__esModule', {
 var parse_node = function parse_node(node, built, top_level_class) {
   if (node.type === 'script') {
     if (node.attribs.window !== undefined) built.window_js += node.children[0].data;else built.ctrl_js += node.children[0].data;
-  } else if (node.type === 'style') {
+  } else if (node.type === 'style' && node.attribs.root === undefined) {
     if (node.attribs.html !== undefined) built.html_css += node.children[0].data;else built.ctrl_css += node.children[0].data;
-  } else if (node.type === 'tag') {
+  } else if (node.type === 'tag' || node.type === 'style') {
     var children = { views: [] };
     for (var i in node.children) {
       children = parse_node(node.children[i], children);
@@ -35,7 +35,7 @@ var parse_node = function parse_node(node, built, top_level_class) {
   } else if (node.type === 'text') {
     var d = node.data;
     if (!d.replace(/(\n|\t)/g, ' ').match(/^ *$/)) {
-      var js = d.replace(/this\./g, 'ctrl.').replace(/^[\n ]*/, '');
+      var js = d.replace(/m\.child\(([^\)]*?)\)/g, 'm.child.bind(this)($1)').replace(/this/g, 'ctrl').replace(/^[\n ]*/, '');
       if (built.needs_closing) {
         built.needs_closing = false;
         js = " ] " + js;

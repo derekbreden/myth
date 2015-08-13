@@ -6,12 +6,12 @@ this.select_view()
     path = path.substr(1,path.length)
 
     // This will get fancier
-    if(m.nest.data[path])
+    if(m.child.data[path])
       which = path
     // module should also be able to specify more routes than its filename somehow
 
-    return m.nest.data[which].is_body()
-      ?m.nest(which)
-      :m('body',m.nest(which))
+    return m.child.data[which].is_body()
+      ?m.child(which)
+      :m('body',m.child(which))
   }
 </script>

@@ -1,8 +1,8 @@
 <console>
   <console-header>
-    ctrl.tabItem('Inspector'),
-    ctrl.tabItem('Editor'),
-    ctrl.tabItem('Console')
+    m.child('console-header-item',{label:'Inspector'}),
+    m.child('console-header-item',{label:'Editor'}),
+    m.child('console-header-item',{label:'Console'})
   </console-header>
   ctrl.tab()==='Console'?
     <console-inner config=this.consoleConfig>
@@ -31,11 +31,6 @@
 <script>
   this.tab = m.prop('Editor')
   this.logs = logs
-  this.tabItem = (which)=>
-    m('console-header-item',{
-      class:this.tab()===which?'active':'',
-      onclick:()=>{this.tab(which)}
-    },which)
   this.consoleConfig = (el,initted)=>{
     if(!initted){
       el.scrollTop = el.scrollHeight

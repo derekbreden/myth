@@ -4,7 +4,7 @@ socket.on('open', () => {
   if(!socket.opened){
     socket.opened = true
     socket.on('close', () => {
-      socket.open()
+      setTimeout(()=>socket.open(), 1000)
     })
   }
 })

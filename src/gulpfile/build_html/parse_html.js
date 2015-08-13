@@ -31,15 +31,28 @@ export default function(file, callback, class_iterator){
       contents:new Buffer(`
   ${built.window_js}
   module.exports["${file.relative.replace(/\..*$/,'')}"] = {
-  is_body(){
-  return ${!!(built.views[0] && built.views[0].match(/^m\('body'/))}
-  },
-  controller(args){
-  ${built.ctrl_js}
-  },
-  view(ctrl, args){
-  return ${built_views}
-  }
+    is_body(){
+      return ${!!(built.views[0] && built.views[0].match(/^m\('body'/))}
+    },
+    controller(args, name){
+      if(typeof(args) === 'object')
+        for(let i in args){
+          this[i] = args[i]
+        }
+      this.children = []
+      this.name = name
+
+      ${built.ctrl_js}
+
+      m.root = m.root || {}
+      m.root[name] = this
+      if(this.parent && this.parent.children){
+        this.parent.children.push(this)
+      }
+    },
+    view(ctrl){
+      return ${built_views}
+    }
   }
   `)      }))
     callback()

@@ -8,6 +8,7 @@
     "myth": "./bin/myth.js"
   },
   "dependencies": {
+    "ace-builds": "ajaxorg/ace-builds",
     "ansi-to-html": "0.3.0",
     "babelify": "6.1.3",
     "browserify": "11.0.1",
