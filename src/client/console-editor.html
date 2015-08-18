@@ -1,3 +1,53 @@
 <console-inner>
-  'Editor will go here'
+  <editor config=this.editorConfig></editor>
 </console-inner>
+
+<style>
+editor{
+  position: absolute;
+  right: 0;
+  left: 200px;
+  top: 24px;
+  bottom: 0;
+  height: auto; width: auto;
+  display: block;
+}
+</style>
+
+<script>
+  this.editorConfig = (el, isInitialized) => {
+    if(!isInitialized){
+      let editor = ace.edit(el)
+      editor.setTheme("ace/theme/twilight")
+      editor.getSession().setMode("ace/mode/html")
+      editor.focus()
+    }
+  }
+</script>
+
+<script server>
+import fs from 'fs'
+
+socket_server.on('connection', (socket) => {
+  socket.on('message',(msg)=>{
+    msg = JSON.parse(msg)
+    if(msg.dir){
+      console.warn(fs.readdirSync(msg.dir))
+    }
+  })
+})
+</script>
+
+<script window>
+  socket.send(JSON.stringify({
+    'dir': './'
+  }))
+  socket.on('message', (msg) => {
+    msg = JSON.parse(msg)
+    if(msg && msg.action && msg.action === "reload-client")
+      window.location.reload()
+  })
+  require('myth/node_modules/brace')
+  require('myth/node_modules/brace/theme/twilight')
+  require('myth/node_modules/brace/mode/html')
+</script>

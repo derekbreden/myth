@@ -3,6 +3,7 @@ import Convert from 'myth/node_modules/ansi-to-html'
 let convert = new Convert()
 let types = ['error','log','info','warn']
 let last_10_console = []
+let pending_action = false
 
 export default function(socket_server){
 
@@ -15,13 +16,22 @@ export default function(socket_server){
     socket.on('close',()=>{
       delete sockets[socket.id]
     })
+    if(pending_action){
+      process_msg(pending_action)
+      pending_action = false
+    }
   })
 
   // Pass messages through those sockets
   let process_msg = (msg)=>{
-    if(msg.action)
-      for(let i in sockets)
+    if(msg.action){
+      if(Object.keys(sockets).length === 0){
+        pending_action = msg
+      }
+      for(let i in sockets){
         sockets[i].send(JSON.stringify(msg))
+      }
+    }
     if(msg.console){
       let str = (typeof msg.console === 'string')
         ?convert.toHtml(msg.console)
@@ -40,8 +50,8 @@ export default function(socket_server){
   // Capture console messages from self
   for(let i in types){
     let original = console[types[i]]
-    console[types[i]] = (data) => {
-      original(data)
+    console[types[i]] = function(data){
+      original.apply(console,arguments)
       process_msg({"console":data})
     }  
   }

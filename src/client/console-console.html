@@ -22,3 +22,46 @@
     }
   }
 </script>
+
+<script window>
+  window.logs = m.prop([])
+  
+  let types = ['error','log','info','warn']
+  for(let i in types){
+    let original = console[types[i]]
+    console[types[i]] = function(data){
+      original.apply(console,arguments)
+      logs.push('<s1>client:</s1> '+Array.prototype.slice.call(arguments).join(' '))
+    }
+  }
+
+  socket.on('message', (msg) => {
+    msg = JSON.parse(msg)
+    if(msg && msg.console){
+      logs.push('<s1>server:</s1> '+msg.console)
+    }
+  })
+</script>
+
+<style>
+  console-item{
+    display: block;
+    white-space: pre;
+  }
+  console-item b{
+    font-weight: normal;
+  }
+  console-item s1{
+    color: #aaa;
+  }
+  console-inner{
+    font-family: Courier;
+    font-size: 12px;
+    letter-spacing: 0;
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    padding: 5px 15px;
+    overflow-y:auto;
+    overflow-x: hidden;
+  }
+</style>

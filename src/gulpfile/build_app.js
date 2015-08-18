@@ -3,7 +3,10 @@ import gulp from 'gulp'
 import babel from 'gulp-babel'
 
 gulp.task("build_app", (cb) => {
-  gulp.src(["./node_modules/myth/src/server/**/*.js"])
+  gulp.src([
+    "./node_modules/myth/src/server/**/*.js",
+    "./build/server/tmp_modules.js"
+  ])
     .pipe(babel())
     .on('error', (err) => {
       console.error(err.fileName)

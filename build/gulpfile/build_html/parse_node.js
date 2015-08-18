@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 var parse_node = function parse_node(node, built, top_level_class) {
   if (node.type === 'script') {
-    if (node.attribs.window !== undefined) built.window_js += node.children[0].data;else built.ctrl_js += node.children[0].data;
+    if (node.attribs.window !== undefined) built.window_js += node.children[0].data;else if (node.attribs.server !== undefined) built.server_js += node.children[0].data;else built.ctrl_js += node.children[0].data;
   } else if (node.type === 'style' && node.attribs.root === undefined) {
     if (node.attribs.html !== undefined) built.html_css += node.children[0].data;else built.ctrl_css += node.children[0].data;
   } else if (node.type === 'tag' || node.type === 'style') {

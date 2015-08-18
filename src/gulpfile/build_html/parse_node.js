@@ -2,6 +2,8 @@ let parse_node = (node, built, top_level_class) => {
   if(node.type === 'script'){
     if(node.attribs.window !== undefined)
       built.window_js += node.children[0].data
+    else if(node.attribs.server !== undefined)
+      built.server_js += node.children[0].data
     else
       built.ctrl_js += node.children[0].data
   }else if(node.type === 'style' && node.attribs.root === undefined){

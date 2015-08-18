@@ -15,7 +15,7 @@ var _gulpBabel = require('gulp-babel');
 var _gulpBabel2 = _interopRequireDefault(_gulpBabel);
 
 _gulp2['default'].task("build_app", function (cb) {
-  _gulp2['default'].src(["./node_modules/myth/src/server/**/*.js"]).pipe((0, _gulpBabel2['default'])()).on('error', function (err) {
+  _gulp2['default'].src(["./node_modules/myth/src/server/**/*.js", "./build/server/tmp_modules.js"]).pipe((0, _gulpBabel2['default'])()).on('error', function (err) {
     console.error(err.fileName);
     console.error(err.loc);
     console.error(err.codeFrame);

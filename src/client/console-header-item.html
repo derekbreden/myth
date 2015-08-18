@@ -9,3 +9,19 @@
   this.click = () => this.parent.tab(this.label)
   this.class = () => this.parent.tab()===this.label?'active':''
 </script>
+
+<style>
+  console-header-item{
+    height: 28px;
+    line-height: 28px;
+    padding: 0 15px;
+    display: inline-block;
+    color: #aaa;
+    cursor: pointer;
+  }
+  console-header-item.active{
+    background: #333;
+    color: #FFF;
+    cursor: default;
+  }
+</style>
