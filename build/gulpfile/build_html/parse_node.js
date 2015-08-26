@@ -40,8 +40,8 @@ var parse_node = function parse_node(node, built, top_level_class) {
         built.needs_closing = false;
         js = " ] " + js;
       }
-      if (js.match(/(return|=>|\?)[ \n]*$/)) {
-        js = js.replace(/(return|=>)[ \n]*$/, '$1 ');
+      if (js.match(/(return|=>|\?|:)[ \n]*$/)) {
+        js = js.replace(/(return|=>|\?|:)[ \n]*$/, '$1 ');
         js += " [ ";
         built.needs_closing = true;
       }

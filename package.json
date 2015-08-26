@@ -21,6 +21,7 @@
     "gulp-concat": "2.6.0",
     "gulp-concat-css": "2.2.0",
     "gulp-develop-server": "0.4.3",
+    "gulp-plumber": "^1.0.1",
     "gulp-util": "3.0.6",
     "htmlparser2-myth": "derekbreden/htmlparser2-myth",
     "mithril-myth": "derekbreden/mithril-myth",

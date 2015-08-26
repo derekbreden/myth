@@ -22,9 +22,13 @@ var _vinylSourceStream = require('vinyl-source-stream');
 
 var _vinylSourceStream2 = _interopRequireDefault(_vinylSourceStream);
 
+var _gulpPlumber = require('gulp-plumber');
+
+var _gulpPlumber2 = _interopRequireDefault(_gulpPlumber);
+
 _gulp2['default'].task("build_js", function (cb) {
 
-  _gulp2['default'].src(["./node_modules/myth/src/client/**/*.js"]).pipe(_gulp2['default'].dest("./build/client/")).on('end', function () {
+  _gulp2['default'].src(["./node_modules/myth/src/client/**/*.js"]).pipe((0, _gulpPlumber2['default'])()).pipe(_gulp2['default'].dest("./build/client/")).on('end', function () {
     (0, _browserify2['default'])({
       entries: ['./build/client/index.js']
     }).transform(_babelify2['default']).bundle().on('error', function (err) {

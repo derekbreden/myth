@@ -11,7 +11,7 @@
 </console>
 
 <script>
-  this.tab = m.prop('Console')
+  this.tab = m.prop('Editor')
 </script>
 
 
@@ -28,14 +28,14 @@
 </style>
 
 <style>
-  console,console-header,console-header-item,console-inner{
+  *{
     box-sizing: border-box;
   }
   console{
-    font-family: Trebuchet MS;
-    background:#000;
-    color: #FFF;
-    font-size: 14px;
+    font-family: 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+    background:#11151b;
+    color:#636d83;
+    font-size: 12px;
     letter-spacing: .5px;
     line-height: 24px;
     position: absolute;
@@ -50,13 +50,12 @@
   console-header{
     height: 36px;
     display: block;
-    border-bottom: 2px solid #333;
-    border-top: 6px solid transparent;
-    padding: 0 4px;
+    -webkit-user-select: none;
+    user-select: none;
   }
   console-inner{
     position: relative;
-    background: #1a1a1a;
+    background: #21252b;
     display: block;
     height: calc(100% - 36px);
   }

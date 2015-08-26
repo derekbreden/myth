@@ -3,12 +3,14 @@ import browserify from 'browserify'
 import babelify from 'babelify'
 import del from 'del'
 import source from 'vinyl-source-stream'
-
+import plumber from 'gulp-plumber'
+  
 gulp.task("build_js",(cb)=>{
 
   gulp.src([
     "./node_modules/myth/src/client/**/*.js"
   ])
+    .pipe(plumber())
     .pipe(gulp.dest("./build/client/"))
     .on('end',()=>{
       browserify({

@@ -1,53 +1,169 @@
 <console-inner>
+  <files>
+    this.files()[this.starting_point()]
+      ?
+        m.child('console-editor-dir',{
+          file_path: this.starting_point(),
+          editor: this
+        })
+      :[]
+  </files>
   <editor config=this.editorConfig></editor>
 </console-inner>
 
-<style>
-editor{
-  position: absolute;
-  right: 0;
-  left: 200px;
-  top: 24px;
-  bottom: 0;
-  height: auto; width: auto;
-  display: block;
-}
-</style>
-
+<script window>
+  require('myth/node_modules/brace')
+  require('myth/node_modules/brace/theme/tomorrow_night_eighties')
+  require('myth/node_modules/brace/mode/html')
+  require('myth/node_modules/brace/mode/json')
+  require('myth/node_modules/brace/mode/markdown')
+  require('myth/node_modules/brace/ext/searchbox')
+  window._cache = window._cache || m.prop({})
+</script>
 <script>
+  if(!window._cache().expandedFiles)
+    window._cache({expandedFiles: []})
+  this.starting_point = m.prop('./')
+  this.files = m.prop([])
+  this.activeFile = m.prop('')
   this.editorConfig = (el, isInitialized) => {
     if(!isInitialized){
-      let editor = ace.edit(el)
-      editor.setTheme("ace/theme/twilight")
-      editor.getSession().setMode("ace/mode/html")
-      editor.focus()
+      this.editor = ace.edit(el)
+      this.editor.setTheme("ace/theme/tomorrow_night_eighties")
+      this.editor.$blockScrolling = Infinity
+      this.editor.getSession().setUseWorker(false)
+      this.editor.getSession().setFoldStyle('manual')
+      this.editor.getSession().setTabSize(2)
     }
   }
+  this.openDir = (dir) => {
+    let to_set = {}
+    let that_index = window._cache().expandedFiles.indexOf(dir)
+    if(that_index === -1)
+      window._cache().expandedFiles.push(dir)
+    else
+      window._cache().expandedFiles.splice(that_index,1)
+    if(this.files()[dir])
+      this.files()[dir]({loading:true})
+    this.activeFile(dir)
+    socket.send(JSON.stringify({
+      'dir': dir
+    }))
+    m.redraw()
+  }
+  this.openFile = (file_path) => {
+    if(this.files()[file_path]){
+      this.files()[file_path]({loading:true})
+    }
+    this.activeFile(file_path)
+    socket.send(JSON.stringify({
+      'file_path': file_path
+    }))
+  }
+  
+  let onMsg = (msg) => {
+    msg = JSON.parse(msg)
+    if(msg.files){
+      this.files(msg.files)
+      if(this.files()[msg.dir]){
+        this.files()[msg.dir]({loading:false})
+      }
+      m.redraw()
+    }
+    if(msg.file_contents){
+      if(this.files()[msg.file_path]){
+        this.files()[msg.file_path]({loading:false})
+      }
+      this.editor.getSession().setValue(msg.file_contents,-1)
+      let mode = 'html'
+      let ext = msg.file_path.match(/\.([^.]*)$/)
+      if(ext.length === 2)
+        ext = ext[1]
+      if(ext === 'json') mode = ext
+      if(ext === 'md') mode = 'markdown'
+      if(ext === 'js') mode = 'javascript'
+      this.editor.getSession().setMode(`ace/mode/${mode}`)
+      this.editor.focus()
+    }
+  }
+  socket.on('message', onMsg)
+  this.onunload = () => {
+    socket.off('message', onMsg)
+  }
+
+  this.openDir(this.starting_point())
 </script>
 
 <script server>
 import fs from 'fs'
+import path from 'path'
 
+const starting_point = './'
+  
 socket_server.on('connection', (socket) => {
   socket.on('message',(msg)=>{
     msg = JSON.parse(msg)
+    if(msg.file_path){
+      socket.send(JSON.stringify({
+        file_contents: fs.readFileSync(msg.file_path).toString(),
+        file_path: msg.file_path
+      }))
+    }
     if(msg.dir){
-      console.warn(fs.readdirSync(msg.dir))
+      let files = {}
+      let label = path.basename(path.resolve(msg.dir))
+      if(msg.dir === starting_point)
+        files[msg.dir] = {
+          label: label,
+          isDirectory: true,
+          isFile: false,
+          parentPath: path.join(msg.dir,'../')
+        }
+      
+      let dir = fs.readdirSync(msg.dir)
+      for(let i in dir){
+        let label = dir[i]
+        let file_path = `${msg.dir}${label}`
+        let stats = fs.statSync(file_path)
+        if(stats.isDirectory())
+          file_path = path.join(file_path,'./')
+        files[file_path] = {
+          label: label,
+          isDirectory: stats.isDirectory(),
+          isFile: stats.isFile(),
+          parentPath: path.join(msg.dir,'./')
+        }
+      }
+      socket.send(JSON.stringify({
+        files: files,
+        dir: msg.dir
+      }))
     }
   })
 })
 </script>
 
-<script window>
-  socket.send(JSON.stringify({
-    'dir': './'
-  }))
-  socket.on('message', (msg) => {
-    msg = JSON.parse(msg)
-    if(msg && msg.action && msg.action === "reload-client")
-      window.location.reload()
-  })
-  require('myth/node_modules/brace')
-  require('myth/node_modules/brace/theme/twilight')
-  require('myth/node_modules/brace/mode/html')
-</script>
+<style>
+  console-inner{
+    border-top: 1px solid #181a1f;
+  }
+  files{
+    position: absolute;
+    width: 200px;
+    height: auto;
+    overflow: auto;
+    top: 0; bottom: 0;
+    left: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    border-right: 1px solid #181a1f;
+  }
+  editor{
+    border-top: 1px solid #181a1f;
+    position: absolute;
+    top: 36px; bottom: 0;
+    left: 200px; right: 0; 
+    height: auto; width: auto;
+    display: block;
+  }
+</style>
