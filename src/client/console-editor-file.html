@@ -1,0 +1,15 @@
+<file>
+  <label
+    class=this.editor.activeFile()===this.file_path?'active':''
+    onclick=this.openSelf
+  >
+    <fg>
+      this.editor.files()[this.file_path]().label()
+    </fg>
+  </label>
+</file>
+<script>
+  this.openSelf = () => {
+    this.editor.openFile(this.file_path)
+  }
+</script>

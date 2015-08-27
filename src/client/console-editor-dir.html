@@ -1,0 +1,72 @@
+<file>
+  <label
+    class=this.editor.activeFile()===this.file_path?'active':''
+    onclick=this.toggleSelf
+  >
+    <fg>
+      this.editor.files()[this.file_path]().label()
+    </fg>
+  </label>,
+  window._cache().expandedFiles.indexOf(this.file_path) !== -1
+    ?<children>
+      Object.keys(this.editor.files()).map((child_file_path)=>{
+        return this.file_path === this.editor.files()[child_file_path]().parentPath()
+          ?
+            this.editor.files()[child_file_path]().isDirectory()
+              ?
+                m.child('console-editor-dir',{file_path:child_file_path,editor:this.editor})
+              :[]
+          :[]
+      }),
+      Object.keys(this.editor.files()).map((child_file_path)=>{
+        return this.file_path === this.editor.files()[child_file_path]().parentPath()
+          ?
+            this.editor.files()[child_file_path]().isFile()
+              ?
+                m.child('console-editor-file',{file_path:child_file_path,editor:this.editor})
+              :[]
+          :[]
+      })
+    </children>
+    :[]
+</file>
+<script>
+  this.toggleSelf = () => {
+    this.editor.activeFile(this.file_path)
+    this.editor.openDir(this.file_path)
+  }
+</script>
+<style>
+  label{
+    display: block;
+    font-size: 11px;
+    line-height: 24px;
+    color: #9da5b4;
+    cursor: pointer;
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  label fg{
+    position: relative;
+  }
+  label::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 24px;
+    right: 0;
+  }
+  label:hover{
+    color: #abb2bf;
+  }
+  label.active::before{
+    background: #31363f;
+  }
+  label.active{
+    color: #d7dae0;
+  }
+  children{
+    display: block;
+    margin-left: 10px;
+  }
+</style>
